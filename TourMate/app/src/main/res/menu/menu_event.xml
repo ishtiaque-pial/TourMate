@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.pial.tourmate.eventTablayout.EventActivity">
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:onClick="save"
+        android:icon="@drawable/save"
+        app:showAsAction="always" />
+
+</menu>

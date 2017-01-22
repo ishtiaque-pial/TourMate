@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Tour Mate</string>
+    <string name="title_activity_login">Login</string>
+    <string name="title_activity_show_event">ShowEventActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_event">EventActivity</string>
+    <string name="title_activity_event_details">EventDetailsActivity</string>
+    <string name="title_activity_data_entry">DataEntryActivity</string>
+    <string name="place_api_key">AIzaSyD7tOmCYtXq9OzBHulugWq3PA65Chqd7iU</string>
+</resources>
