@@ -31,7 +31,7 @@ public class ForecastAdapter extends BaseAdapter {
     private Context context;
     private List<Datum__> forecastArrayList;
     private LayoutInflater layoutInflater;
-    private String img = "http://l.yimg.com/a/i/us/we/52/";
+
 
     public ForecastAdapter(Context context, List<Datum__> forecastArrayList) {
         this.context = context;

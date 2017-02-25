@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.pial.tourmate.LoadImage;
 import com.example.pial.tourmate.R;
 import com.example.pial.tourmate.database.Expense;
 import com.example.pial.tourmate.database.Moment;
@@ -76,17 +77,15 @@ public class MomentListAdapter extends ArrayAdapter {
 
             path = momentList.get(position).getMomentPhotoPath();
 
-        try {
-            myBitmap = BitmapFactory.decodeFile(path);
-            if (myBitmap == null) {
 
-            } else {
-                //viewHolder.momentImageViewTV.setImageBitmap(myBitmap);
-            }
-        }catch (Exception ex)
-        {
-            Log.e("Error1",""+ex);
-        }
+
+                viewHolder.momentImageViewTV.setImageBitmap(null);
+
+        LoadImage loadImage=new LoadImage(getContext(),viewHolder.momentImageViewTV,path);
+        loadImage.execute();
+
+
+
 
 
 

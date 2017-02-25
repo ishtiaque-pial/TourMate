@@ -43,7 +43,7 @@ public class EventMoments extends Fragment {
         momentManager = new MomentManager(getActivity());
         momentList = momentManager.getAllMoment(evnID);
         if (momentList.isEmpty()) {
-            Toast.makeText(getActivity(), "Something Wrong", Toast.LENGTH_SHORT).show();
+
         } else {
             momentListAdapter = new MomentListAdapter(getActivity(), momentList);
             momentListView.setAdapter(momentListAdapter);

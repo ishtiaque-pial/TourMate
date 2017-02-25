@@ -1,5 +1,6 @@
 package com.example.pial.tourmate;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -36,6 +37,7 @@ public class NearByDetailsActivity extends AppCompatActivity {
     String nearByType,latitude,longitude;
     private PlacesCustomAdapter placesCustomAdapter;
     LoginSharedPreference loginSharedPreference;
+    ProgressDialog progress;
 
     private static final String BASE_URL = "https://maps.googleapis.com/maps/api/place/nearbysearch/";
     private PlacesServiceApi placesServiceApi;
@@ -43,6 +45,12 @@ public class NearByDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_near_by_details);
+
+        progress = new ProgressDialog(this);
+        progress.setTitle("Loading");
+        progress.setMessage("Wait while loading...");
+        progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
+        progress.show();
         type= (TextView) findViewById(R.id.NearbyTypeTV);
         locatinInfoListView= (ListView) findViewById(R.id.nearByList);
         if (getSupportActionBar()!=null)
@@ -80,6 +88,7 @@ public class NearByDetailsActivity extends AppCompatActivity {
             public void onResponse(Call<NearByLocationResponse> call, Response<NearByLocationResponse> response) {
                 NearByLocationResponse nearByLocationResponse=response.body();
                 final List<Result> results = nearByLocationResponse.getResults();
+                progress.dismiss();
                 if (results==null)
                 {
                     Toast.makeText(NearByDetailsActivity.this, "Found Nothing From your location", Toast.LENGTH_SHORT).show();
@@ -97,7 +106,8 @@ public class NearByDetailsActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<NearByLocationResponse> call, Throwable t) {
-                Toast.makeText(NearByDetailsActivity.this, "Wrong", Toast.LENGTH_SHORT).show();
+                progress.dismiss();
+                Toast.makeText(NearByDetailsActivity.this, "No Internet Connection", Toast.LENGTH_SHORT).show();
 
             }
         });

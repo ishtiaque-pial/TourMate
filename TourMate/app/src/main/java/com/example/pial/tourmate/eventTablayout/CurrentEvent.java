@@ -94,7 +94,7 @@ public class CurrentEvent extends Fragment {
                     //getData(deatination);
 
                     loginSharedPreference.saveDestination(deatination);
-                    Toast.makeText(getActivity(), "ok"+loginSharedPreference.getDestination(), Toast.LENGTH_SHORT).show();
+
                     loginSharedPreference.saveEventId(e_id);
                     loginSharedPreference.saveBudget(budget);
                     Intent in=new Intent(getActivity(), EventDetailsActivity.class);

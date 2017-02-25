@@ -1,5 +1,6 @@
 package com.example.pial.tourmate.eventDetailsTablayout;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -50,6 +51,7 @@ public class EventWeather extends Fragment {
     ListView forecastListView;
     ForecastAdapter forecastAdapter;
     TextView section_label;
+    ProgressDialog progress;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -62,6 +64,11 @@ public class EventWeather extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_event_weather, container, false);
         section_label= (TextView) rootView.findViewById(R.id.section_label);
         forecastListView = (ListView) rootView.findViewById(R.id.weatherListView);
+        progress = new ProgressDialog(getActivity());
+        progress.setTitle("Loading");
+        progress.setMessage("Wait while loading...");
+        progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
+        progress.show();
         networkLibraryIntialize();
         forecastArrayList = new ArrayList<Daily>();
         // ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -86,7 +93,7 @@ public class EventWeather extends Fragment {
                     } else {
                         lati = results.get(0).getGeometry().getLocation().getLat();
                         longi = results.get(0).getGeometry().getLocation().getLng();
-                        Toast.makeText(getActivity(), "" + lati+" "+longi, Toast.LENGTH_SHORT).show();
+
                         getData();
                     }
 
@@ -95,6 +102,9 @@ public class EventWeather extends Fragment {
 
                 @Override
                 public void onFailure(Call<AreaLogLatResponse> call, Throwable t) {
+                    progress.dismiss();
+                    Log.e("webservice", "onFailure: " + t.getMessage());
+                    Toast.makeText(getActivity(), "No Internet Connection", Toast.LENGTH_SHORT).show();
 
                 }
             });
@@ -116,7 +126,7 @@ public class EventWeather extends Fragment {
     private void getData()
     {
 
-        String url = "forecast/2e59fb6e0ec91a11878ef6f66a92ee8e/" + lati + "," + longi;
+        String url = "https://api.darksky.net/forecast/2e59fb6e0ec91a11878ef6f66a92ee8e/" + lati + "," + longi;
         Call<WeatherResponse> weatherResponseCall = weatherApi.getAllWeatherData(url);
         weatherResponseCall.enqueue(new Callback<WeatherResponse>() {
             @Override
@@ -140,16 +150,15 @@ public class EventWeather extends Fragment {
                 forecastListView.setAdapter(forecastAdapter);
 
 
+                progress.dismiss();
 
-                Toast.makeText(getActivity(), String.valueOf(weatherResponse.getLatitude())+"Temparature max"+info.get(1).getTemperatureMax().intValue()
-                        , Toast.LENGTH_SHORT).show();
                 Log.e("webservice", "onResponse: " + weatherResponse.getLatitude());
             }
 
             @Override
             public void onFailure(Call<WeatherResponse> call, Throwable t) {
                 Log.e("webservice", "onFailure: " + t.getMessage());
-
+                Toast.makeText(getActivity(), ""+t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

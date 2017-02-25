@@ -66,10 +66,7 @@ public class EventExpense extends Fragment {
             loginSharedPreference.saveTotalExpense(i);
             EventManager eventManager = new EventManager(getActivity());
             long res = eventManager.updateEventTable(eventID, i);
-            if (res<1)
-            {
-                Toast.makeText(getActivity(), "Something Wrong", Toast.LENGTH_SHORT).show();
-            }
+
 
 
 
